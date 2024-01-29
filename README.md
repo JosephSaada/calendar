@@ -8,3 +8,5 @@ From there, create, update, and delete events. then you can visulize it. (Set pu
 If you got this far the events should be self explantory. 
 
 Thanks!
+
+Requiremnets adhered to: 1, 3, 4, 5, 7, 10. (also 6)
