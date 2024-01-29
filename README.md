@@ -9,4 +9,4 @@ If you got this far the events should be self explantory.
 
 Thanks!
 
-Requiremnets adhered to: 1, 3, 4, 5, 7, 10. (also 6)
+Requirements adhered to: 1, 3, 4, 5, 7, 10. (also 6)
