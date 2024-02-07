@@ -7,6 +7,8 @@ class Main:
         self.root = root
         self.root.title('Login System')
         self.user_list = {'': '', 'user2': 'password2'}
+        #added code (Factory Pattern)
+        self.calendar_factory = user.CalendarFactory()
 
         # Username Label and Entry
         self.label_username = tk.Label(root, text='Username:')
@@ -34,7 +36,7 @@ class Main:
 
         if username in self.user_list and self.user_list[username] == password:
             self.root.withdraw()
-            user.UserWindow(username)
+            user.UserWindow(username, self.calendar_factory)
         else:
             messagebox.showerror('Login Failed', 'Incorrect username or password')
 

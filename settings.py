@@ -3,8 +3,13 @@ from tkinter import ttk
 from datetime import datetime
 import pytz
 
-class Settings:
+#added code (Observer Pattern)
+from observer import Observable
+
+class Settings(Observable):
     def __init__(self, root):
+        # added code (Observer Pattern)
+        super().__init__()
         self.root = root
         self.root.title('Settings')
         self.root.geometry('300x300')
@@ -49,6 +54,8 @@ class Settings:
             self.label_timezone.configure(text='Timezone: {}'.format(''))
             self.label_time_value.configure(text=self.get_current_time())
             self.label_date_value.configure(text=datetime.now().strftime('%d/%m/%Y'))
+        #added coded (Observer Pattern)
+        self.notify_observers()
 
     def get_current_time(self, timezone="America/Los_Angeles"):
         utc_time = datetime.utcnow()

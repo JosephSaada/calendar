@@ -5,33 +5,67 @@ import objCalendar
 import tkinter.simpledialog
 import tkinter.ttk as ttk
 
+#added code (Factory Pattern), added code (Encapsulating Calendar Creation)
+class CalendarFactory:
+    @staticmethod
+    def create_calendar(name):
+        return objCalendar.objCalendar(name)
 class UserWindow:
-    def __init__(self, name):
+    def __init__(self, name, calendar_factory):
         self.user_window = tk.Toplevel()
         self.user_window.title('User Window - {}'.format(name))
+        self.calendar_factory = calendar_factory
 
-        self.btn_create_calendar = tk.Button(self.user_window, text='Create Calendar', command=self.create_calendar)
-        self.btn_open_calendar = tk.Button(self.user_window, text='Open Calendar', command=self.open_calendar)
-        self.btn_delete_calendar = tk.Button(self.user_window, text='Delete Calendar', command=self.delete_calendar)
-        self.btn_view_public_calendar = tk.Button(self.user_window, text='View Public Calendar', command=self.view_public_calendar)
-        self.btn_open_settings = tk.Button(self.user_window, text='Open Settings', command=self.open_settings)
-        self.btn_logout = tk.Button(self.user_window, text='Logout', command=self.logout)
-
-        self.btn_create_calendar.pack(pady=10)
-        self.btn_open_calendar.pack(pady=10)
-        self.btn_delete_calendar.pack(pady=10)
-        self.btn_view_public_calendar.pack(pady=10)
-        self.btn_open_settings.pack(pady=10)
-        self.btn_logout.pack(pady=10)
+        # removed code (Consolidating Button Creation)
+        # self.btn_create_calendar = tk.Button(self.user_window, text='Create Calendar', command=self.create_calendar)
+        # self.btn_open_calendar = tk.Button(self.user_window, text='Open Calendar', command=self.open_calendar)
+        # self.btn_delete_calendar = tk.Button(self.user_window, text='Delete Calendar', command=self.delete_calendar)
+        # self.btn_view_public_calendar = tk.Button(self.user_window, text='View Public Calendar', command=self.view_public_calendar)
+        # self.btn_open_settings = tk.Button(self.user_window, text='Open Settings', command=self.open_settings)
+        # self.btn_logout = tk.Button(self.user_window, text='Logout', command=self.logout)
+        #
+        # self.btn_create_calendar.pack(pady=10)
+        # self.btn_open_calendar.pack(pady=10)
+        # self.btn_delete_calendar.pack(pady=10)
+        # self.btn_view_public_calendar.pack(pady=10)
+        # self.btn_open_settings.pack(pady=10)
+        # self.btn_logout.pack(pady=10)
 
         self.calendars = []
 
+        self.calendar_factory = calendar_factory
+        self.create_buttons()
+
+    #added code (Consolidating Button Creation)
+    def create_buttons(self):
+        button_data = [
+            ("Create Calendar", self.create_calendar),
+            ("Open Calendar", self.open_calendar),
+            ("Delete Calendar", self.delete_calendar),
+            ("View Public Calendar", self.view_public_calendar),
+            ("Open Settings", self.open_settings),
+            ("Logout", self.logout)
+        ]
+
+        for button_text, command in button_data:
+            button = tk.Button(self.user_window, text = button_text, command = command)
+            button.pack(pady = 10)
+
+    # added code (Factory Pattern), added code (Encapsulating Calendar Creation)
     def create_calendar(self):
         calendar_name = tkinter.simpledialog.askstring("Calendar Name",
                                                        "Enter the name of your calendar")
         if calendar_name:
-            new_calendar = objCalendar.objCalendar(calendar_name)
+            new_calendar = self.calendar_factory.create_calendar(calendar_name)
             self.calendars.append(new_calendar)
+
+    # removed code (Factory Pattern)
+    # def create_calendar(self):
+    #     calendar_name = tkinter.simpledialog.askstring("Calendar Name",
+    #                                                    "Enter the name of your calendar")
+    #     if calendar_name:
+    #         new_calendar = objCalendar.objCalendar(calendar_name)
+    #         self.calendars.append(new_calendar)
 
     def open_calendar(self):
         if not self.calendars:
@@ -102,3 +136,4 @@ class UserWindow:
         self.user_window.destroy()
         print("Logging out")
         sys.exit()
+
